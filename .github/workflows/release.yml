@@ -1,0 +1,40 @@
+name: Build LyricFlow (macOS + Windows)
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      # Required for building Tauri on Linux; harmless on macOS/Windows (not used here, but safe to keep minimal)
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (Tauri)
+        run: npm run tauri:build
+
+      - name: Upload bundles
+        uses: actions/upload-artifact@v4
+        with:
+          name: LyricFlow-${{ runner.os }}
+          path: src-tauri/target/release/bundle/**

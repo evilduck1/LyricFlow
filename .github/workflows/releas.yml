@@ -42,6 +42,8 @@ jobs:
 
       - name: Build & upload to GitHub Release
         uses: tauri-apps/tauri-action@v0.6.1
+          env:
+            NODE_OPTIONS: --no-warnings
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

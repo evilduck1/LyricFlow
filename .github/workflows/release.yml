@@ -26,23 +26,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "pnpm"
-
-      # This is the most reliable way to ensure pnpm exists on all runners
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
-
-      - name: Verify pnpm
-        run: pnpm --version
+          cache: "npm"
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Install frontend dependencies
+        run: npm ci
 
       - name: Build & upload to GitHub Release
         uses: tauri-apps/tauri-action@v0.6.1
@@ -52,6 +42,6 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: "LyricFlow ${{ github.ref_name }}"
-          releaseBody: "Automated build for ${{ github.ref_name }}"
+          releaseBody: "See the assets to download this version and install."
           releaseDraft: false
           prerelease: false

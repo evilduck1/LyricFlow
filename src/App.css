@@ -383,7 +383,7 @@ button:disabled { opacity: 0.4; cursor: default; }
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: 1;
+  flex: 0 0 auto;
   justify-content: flex-end;
 }
 
@@ -395,8 +395,10 @@ button:disabled { opacity: 0.4; cursor: default; }
 }
 
 .playlistSearch {
-  flex: 1;
-  max-width: 260px;
+  flex: 0 0 auto;
+  width: clamp(170px, 22vw, 220px);
+  max-width: none;
+
   border: 1px solid rgba(255,255,255,0.15);
   background: rgba(255,255,255,0.06);
   color: inherit;
@@ -404,6 +406,7 @@ button:disabled { opacity: 0.4; cursor: default; }
   border-radius: 12px;
   outline: none;
   margin-right: 6px;
+  box-sizing: border-box;
 }
 
 .playlistSearch:focus {
@@ -482,9 +485,8 @@ button.playlistItem.active {
 }
 
 
-/* Windows can render inputs slightly wider; give the search box a tiny safety gap */
-.playlistSearch {
-  margin-right: 8px;
+/* Windows can render inputs slightly wider; keep box sizing consistent */
+.platform-windows .playlistSearch {
   box-sizing: border-box;
 }
 
@@ -521,6 +523,8 @@ button.playlistItem.active {
   display: none !important;
 }
 
+
+
 /* --- Windows-only hard fix: prevent playlist search bleeding into card border --- */
 .platform-windows .playlistTitleRow {
   padding-right: 14px;
@@ -530,3 +534,4 @@ button.playlistItem.active {
 .platform-windows .playlistTools {
   max-width: calc(100% - 14px);
 }
+

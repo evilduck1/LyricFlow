@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "LyricFlow",
-  "version": "2.2.12",
+  "version": "2.2.13",
   "identifier": "com.seanengland.lyricflow",
   "build": {
     "frontendDist": "../dist",

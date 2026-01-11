@@ -520,3 +520,13 @@ button.playlistItem.active {
   height: 0 !important;
   display: none !important;
 }
+
+/* --- Windows-only hard fix: prevent playlist search bleeding into card border --- */
+.platform-windows .playlistTitleRow {
+  padding-right: 14px;
+  overflow: hidden;
+}
+
+.platform-windows .playlistTools {
+  max-width: calc(100% - 14px);
+}

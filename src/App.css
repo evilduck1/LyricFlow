@@ -536,3 +536,24 @@ button.playlistItem.active {
   max-width: calc(100% - 14px);
 }
 
+/* --- Playlist header: stack search on its own full-width row --- */
+
+/* Allow header tools to wrap onto a second line */
+.playlistTools {
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Keep Now Playing on the first row */
+.playlistNowPlayingBtn {
+  order: 1;
+}
+
+/* Search sits underneath, full width */
+.playlistSearch {
+  order: 2;
+  flex: 1 0 100%;
+  width: 100%;
+  max-width: none;
+  margin-right: 0;
+}

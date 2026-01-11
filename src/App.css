@@ -515,7 +515,13 @@ button.playlistItem.active {
 
 .platform-windows .lyricsPane::-webkit-scrollbar-button,
 .platform-windows .playlistBox::-webkit-scrollbar-button {
-  width: 0 !important;
-  height: 0 !important;
-  display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+    
+}
+/* Windows WebView2 fix:
+   Prevent playlist search from ever touching the card border */
+.platform-windows .playlistTools {
+  padding-right: 12px;
 }

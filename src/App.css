@@ -420,3 +420,44 @@ button:hover:not(:disabled) {
 button.playlistItem:hover {
   outline: none !important;
 }
+
+/* Playlist items */
+.playlistEmpty {
+  font-size: 12px;
+  opacity: 0.7;
+  padding: 8px 6px;
+}
+
+button.playlistItem {
+  text-align: left;
+  width: 100%;
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+}
+
+button.playlistItem.active {
+  border-color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.10);
+}
+
+.playlistIndex {
+  width: 34px;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+  flex: 0 0 auto;
+}
+
+.playlistName {
+  padding-left: 6px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

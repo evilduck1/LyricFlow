@@ -60,7 +60,7 @@ export default function App() {
   );
 
   // Lyrics scroll center bias (persisted) — pixels added to centered target (positive moves it down)
-    const [lyricCenterBiasPx] = useState<number>(() => {
+  const [lyricCenterBiasPx] = useState<number>(() => {
     const n = Number(localStorage.getItem("lyricCenterBiasPx"));
     return Number.isFinite(n) ? clamp(n, -400, 400) : 60; // default ~2 lines down
   });
@@ -799,7 +799,7 @@ function scrollToNowPlaying() {
     <div className="shell">
       <header className="topbar">
         <div className="title">
-          <div className="appName">LyricFlow</div>
+          <div className="appName">MP3 Lyrics Player — PLAYLIST</div>
         </div>
 
         <div className="actions">
@@ -1007,9 +1007,9 @@ function scrollToNowPlaying() {
               {lines.map((l, i) => (
                 <div
                   key={`${l.tMs}:${i}`}
-                                    ref={(el) => {
-                                      lineRefs.current[i] = el;
-                                    }}
+                  ref={(el) => {
+                    lineRefs.current[i] = el;
+                  }}
                   className={i === activeIdx ? "line active" : "line"}
                   title={`${(l.tMs / 1000).toFixed(2)}s (click to seek)`}
                   onClick={() => seekToLine(l, i)}

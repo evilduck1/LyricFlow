@@ -29,16 +29,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
-
-      - name: Install Rust
+          cache: "pnpm"
+- name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
       # Linux deps not needed because we aren't building linux here.
       # Add ubuntu-latest later if you want.
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
 
       - name: Build & upload to GitHub Release
         uses: tauri-apps/tauri-action@v0.6.1

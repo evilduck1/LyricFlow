@@ -307,8 +307,8 @@ button:disabled { opacity: 0.4; cursor: default; }
 .playlistTitleRow {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
+  justify-content: flex-start; /* important */
   padding-right: 6px;
 }
 
@@ -380,11 +380,11 @@ button:disabled { opacity: 0.4; cursor: default; }
 
 /* Playlist header tools (Now Playing + Search) */
 .playlistTools {
+  margin-left: auto;          /* THIS forces right alignment */
   display: flex;
   align-items: center;
   gap: 10px;
   flex: 0 0 auto;
-  justify-content: flex-end;
 }
 
 .playlistNowPlayingBtn {

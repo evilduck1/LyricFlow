@@ -71,7 +71,15 @@ export default function App() {
 
   const currentTrack = trackIndex >= 0 ? tracks[trackIndex] : null;
 
+  
+  // Platform styling hooks (Windows-only UI quirks)
   useEffect(() => {
+    const isWindows = /Windows/i.test(navigator.userAgent);
+    document.documentElement.classList.toggle("platform-windows", isWindows);
+    return () => document.documentElement.classList.remove("platform-windows");
+  }, []);
+
+useEffect(() => {
     if (!currentTrack) return;
     localStorage.setItem("lastTrackPath", currentTrack.path);
   }, [currentTrack?.path]);

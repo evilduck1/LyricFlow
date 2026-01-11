@@ -1,3 +1,5 @@
+*, *::before, *::after { box-sizing: border-box; }
+
 html, body {
   height: 100%;
   margin: 0;
@@ -400,6 +402,7 @@ button:disabled { opacity: 0.4; cursor: default; }
   padding: 8px 10px;
   border-radius: 12px;
   outline: none;
+  margin-right: 6px;
 }
 
 .playlistSearch:focus {
@@ -460,4 +463,59 @@ button.playlistItem.active {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+
+
+
+/* Extra-aggressive scrollbar hiding (covers button/arrows on some engines) */
+.lyricsPane::-webkit-scrollbar,
+.playlistBox::-webkit-scrollbar {
+  display: none !important;
+}
+.lyricsPane::-webkit-scrollbar-button,
+.playlistBox::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+
+/* Windows can render inputs slightly wider; give the search box a tiny safety gap */
+.playlistSearch {
+  margin-right: 8px;
+  box-sizing: border-box;
+}
+
+
+/* ---- Windows-only: hide classic scrollbars (WebView2 can still draw track/buttons) ---- */
+.platform-windows .lyricsPane,
+.platform-windows .playlistBox {
+  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;  /* old Edge/IE */
+}
+
+.platform-windows .lyricsPane::-webkit-scrollbar,
+.platform-windows .playlistBox::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.platform-windows .lyricsPane::-webkit-scrollbar-track,
+.platform-windows .playlistBox::-webkit-scrollbar-track,
+.platform-windows .lyricsPane::-webkit-scrollbar-corner,
+.platform-windows .playlistBox::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+.platform-windows .lyricsPane::-webkit-scrollbar-thumb,
+.platform-windows .playlistBox::-webkit-scrollbar-thumb {
+  background: transparent !important;
+}
+
+.platform-windows .lyricsPane::-webkit-scrollbar-button,
+.platform-windows .playlistBox::-webkit-scrollbar-button {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
 }

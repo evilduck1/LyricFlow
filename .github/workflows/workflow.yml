@@ -6,12 +6,14 @@ on:
   pull_request:
     branches: [main]
 
+# Prevent overlapping runs from canceling mid-build
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -31,3 +33,4 @@ jobs:
 
       - name: Build Tauri app
         run: npm run tauri build
+

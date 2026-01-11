@@ -1,0 +1,522 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+.shell {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+}
+
+.title .appName {
+  font-size: 18px;
+  font-weight: 700;
+}
+.title .subtitle {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+button {
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+button.secondary { opacity: 0.9; }
+button:disabled { opacity: 0.4; cursor: default; }
+
+.main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 14px;
+  padding: 14px 14px 18px 14px;
+  min-height: 0;
+}
+
+.left, .right { min-height: 0; height: 100%; }
+
+.left {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+.right { display: flex; flex-direction: column; }
+
+.card {
+  border: 1px solid rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.04);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+
+.left > .card:last-child {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.cardTitle {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.label {
+  width: 70px;
+  opacity: 0.8;
+  font-size: 12px;
+}
+
+.checkbox {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.hint {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.75;
+  line-height: 1.3;
+}
+
+.small {
+  font-size: 12px;
+  opacity: 0.85;
+  margin-top: 6px;
+}
+
+.lyricsHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 6px 4px 10px 4px;
+}
+
+.lyricsTitle {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.lyricsEmpty {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.lyricsBox {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.03);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.lyricsPane {
+  overflow-anchor: none;
+  /* Stable centering padding (set via JS as a CSS var) */
+  --lyrics-pad-y: 0px;
+
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+
+  padding-top: var(--lyrics-pad-y);
+  padding-bottom: var(--lyrics-pad-y);
+  padding-left: 6px;
+  padding-right: 6px;
+
+  text-align: center;
+}
+
+.line {
+  overflow-anchor: none;
+  padding: 10px 8px;
+  border-radius: 12px;
+  font-size: 18px;
+  opacity: 0.38;
+  transition: opacity 120ms ease, background 120ms ease;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.line:hover {
+  opacity: 0.65;
+  background: rgba(255,255,255,0.05);
+}
+
+/* IMPORTANT: active line must NOT change layout (no font-size/transform) */
+.line.active {
+  opacity: 1;
+  background: rgba(255,255,255,0.10);
+}
+
+
+.albumArtBox{
+  width:100%;
+  aspect-ratio:1/1;
+  border-radius:12px;
+  overflow:hidden;
+  background:rgba(0,0,0,0.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.albumArtBox img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.albumArtFallback{
+  font-size:12px;
+  opacity:0.6;
+  text-align:center;
+  padding:10px;
+}
+
+
+/* Ensure left and right columns align at the top */
+.main { align-items: stretch; }
+
+/* Normalize top spacing so Player and Lyrics cards align */
+.right {
+  padding-top: 0;
+}
+
+.lyricsHeader {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+
+/* ---- Final layout override: keep Lyrics as a fixed-height box with internal scrolling ---- */
+.main { align-items: stretch; }
+
+.right {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+
+.lyricsPane {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+
+
+
+.repeatGroup {
+  display: flex;
+  gap: 6px;
+}
+
+.repeatGroup button {
+  min-width: 44px;
+}
+
+.repeatGroup button.active {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.9);
+}
+
+
+/* Active repeat indicator (green dot) */
+
+.repeatGroup {
+  position: relative;
+}
+
+.repeatGroup button {
+  position: relative;
+}
+
+.repeatGroup button.active::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3cff3c;
+}
+
+
+.playingDot {
+  width: 10px;
+  display: inline-block;
+  color: #3cff3c;
+  margin-right: 4px;
+}
+
+
+.playlistTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-right: 6px;
+}
+
+.sortSelect {
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.topbarToggle {
+  margin-left: 6px;
+  margin-right: 6px;
+  opacity: 0.9;
+}
+
+
+/* Hidden single-line measurer so centering padding doesn't change when active line wraps */
+.lineMeasure {
+  position: absolute;
+  top: -10000px;
+  left: -10000px;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.playlistScrollWrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+
+  /* Make this a flex container so .playlistBox can actually flex and become scrollable */
+  display: flex;
+  flex-direction: column;
+
+  /* Prevent the last item from rendering outside the rounded card edge */
+  overflow: hidden;
+}
+
+.playlistBox {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding-bottom: 14px;
+
+  /* Completely hide scrollbar (playlist still scrolls) */
+  scrollbar-width: none; /* Firefox */
+}
+
+.playlistBox::-webkit-scrollbar { width: 0; height: 0; }
+.playlistName {
+  padding-left: 6px;
+}
+
+
+/* Remove focus ring highlight bars on clickable lyric lines / playlist items */
+.line:focus { outline: none; }
+.line:focus-visible { outline: none; }
+.playlistItem:focus { outline: none; }
+.playlistItem:focus-visible { outline: none; }
+
+
+/* Playlist header tools (Now Playing + Search) */
+.playlistTools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.playlistNowPlayingBtn {
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.playlistSearch {
+  flex: 1;
+  max-width: 260px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  padding: 8px 10px;
+  border-radius: 12px;
+  outline: none;
+  margin-right: 6px;
+}
+
+.playlistSearch:focus {
+  border-color: rgba(255,255,255,0.35);
+}
+
+
+/* White outline on hover for all buttons */
+button:hover:not(:disabled) {
+  outline: 1px solid rgba(255,255,255,0.9);
+  outline-offset: 0;
+}
+
+
+
+
+/* Disable hover outline for playlist song pills (override global button hover) */
+button.playlistItem:hover {
+  outline: none !important;
+}
+
+/* Playlist items */
+.playlistEmpty {
+  font-size: 12px;
+  opacity: 0.7;
+  padding: 8px 6px;
+}
+
+button.playlistItem {
+  text-align: left;
+  width: 100%;
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+}
+
+button.playlistItem.active {
+  border-color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.10);
+}
+
+.playlistIndex {
+  width: 34px;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+  flex: 0 0 auto;
+}
+
+.playlistName {
+  padding-left: 6px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+
+
+/* Extra-aggressive scrollbar hiding (covers button/arrows on some engines) */
+.lyricsPane::-webkit-scrollbar,
+.playlistBox::-webkit-scrollbar {
+  display: none !important;
+}
+.lyricsPane::-webkit-scrollbar-button,
+.playlistBox::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+
+/* Windows can render inputs slightly wider; give the search box a tiny safety gap */
+.playlistSearch {
+  margin-right: 8px;
+  box-sizing: border-box;
+}
+
+
+/* ---- Windows-only: hide classic scrollbars (WebView2 can still draw track/buttons) ---- */
+.platform-windows .lyricsPane,
+.platform-windows .playlistBox {
+  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;  /* old Edge/IE */
+}
+
+.platform-windows .lyricsPane::-webkit-scrollbar,
+.platform-windows .playlistBox::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.platform-windows .lyricsPane::-webkit-scrollbar-track,
+.platform-windows .playlistBox::-webkit-scrollbar-track,
+.platform-windows .lyricsPane::-webkit-scrollbar-corner,
+.platform-windows .playlistBox::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+.platform-windows .lyricsPane::-webkit-scrollbar-thumb,
+.platform-windows .playlistBox::-webkit-scrollbar-thumb {
+  background: transparent !important;
+}
+
+.platform-windows .lyricsPane::-webkit-scrollbar-button,
+.platform-windows .playlistBox::-webkit-scrollbar-button {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}

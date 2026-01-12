@@ -533,7 +533,14 @@ button.playlistItem.active {
 }
 
 .platform-windows .playlistTools {
-  max-width: calc(100% - 14px);
+  max-width: calc(88% - 14px);
+}
+
+/* --- Playlist header: stack search on its own full-width row --- */
+
+/* Allow header tools to wrap onto a second line */
+.platform-windows .playlistTools {
+  max-width: calc(90% - 14px);
 }
 
 /* --- Playlist header: stack search on its own full-width row --- */
@@ -552,8 +559,8 @@ button.playlistItem.active {
 /* Search sits underneath, full width */
 .playlistSearch {
   order: 2;
-  flex: 1 0 100%;
-  width: 100%;
-  max-width: none;
-  margin-right: 0;
+  flex: 1 0 0%;
+  width: 100;
+  max-width: 50%;
+  margin-right: ;
 }
